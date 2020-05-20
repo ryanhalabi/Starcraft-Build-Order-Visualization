@@ -2,9 +2,11 @@ import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { BuildingSubTrack } from "./BuildingSubTrack";
+import { TrackDivider } from "./TrackDivider";
 // import { images } from "./Images";
 import { Circle } from "react-shapes";
 import Slider from "@material-ui/core/Slider";
+import "../Component.css";
 
 // responsible for visualizing the buildings
 // each track will be a single vertical line, option to add +1, and drag and drop
@@ -17,7 +19,7 @@ class BuildingTrack extends React.Component {
         props.buildingName
       ];
     var maxTime = props.globalState.metaState.maxTime;
-    var buckets = this.buildBuckets(buildTimes, maxTime);
+    var buckets = this.makeSubTrackData(buildTimes, maxTime);
 
     this.state = {
       buildingName: props.buildingName,
@@ -25,27 +27,29 @@ class BuildingTrack extends React.Component {
     };
   }
 
-  buildBuckets(buildTimes, maxTime) {
+  makeSubTrackData(buildTimes, maxTime) {
     if (buildTimes.length === 0) {
       return buildTimes;
     }
 
     buildTimes = buildTimes.concat([maxTime]);
+    var accumulator = 1;
     var timeCounts = buildTimes.reduce((acc, cur) => {
       if (!acc[cur]) {
-        acc[cur] = 1;
+        acc[cur] = accumulator;
       } else {
         acc[cur] = +1;
       }
+      accumulator++;
       return acc;
     }, {});
 
-    var sortedTimes = Object.keys(timeCounts).sort();
+    var sortedTimes = Object.keys(timeCounts).sort((a, b) => a - b);
     var buckets = [];
-    for (var i = 0; i < sortedTimes.length; i = i + 2) {
+    for (var i = 0; i < sortedTimes.length - 1; i++) {
       var bucket = {
         range: [sortedTimes[i], sortedTimes[i + 1]],
-        count: sortedTimes[i],
+        count: timeCounts[sortedTimes[i]],
       };
       buckets.push(bucket);
     }
@@ -60,21 +64,26 @@ class BuildingTrack extends React.Component {
 
     return (
       <Col>
-        <div>{buildingName}</div>
-        <img src={`/${buildingName}.png`} alt="image" width={80} />
-        {/* {images.hasOwnProperty(buildingName) ? (
-          images[buildingName]
-        ) : (
-          <Circle
-            radius={1}
-            fill={{ color: "#2409ba" }}
-            stroke={{ color: "#E65243" }}
-            strokeWidth={3}
+        <div className="BuildingTrack">
+          {buildingName}
+          <img
+            src={`/${buildingName}.png`}
+            alt={`${buildingName}`}
+            width={80}
           />
-        )} */}
-        {this.state.buckets.map((value, index) => {
-          return <BuildingSubTrack key={value.range[0]} bucket={value} />;
-        })}
+
+          <Container>
+            <Row>
+              {this.state.buckets.map((value, index) => {
+                return (
+                  <Col className="BuildingSubTrackCol" key={value.range}>
+                    <BuildingSubTrack key={value.range[0]} bucket={value} />
+                  </Col>
+                );
+              })}
+            </Row>
+          </Container>
+        </div>
       </Col>
     );
   }

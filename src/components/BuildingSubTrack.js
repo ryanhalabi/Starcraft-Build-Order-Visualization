@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
+import "../Component.css";
 
 import { Rectangle } from "react-shapes";
 
@@ -13,7 +14,7 @@ export class BuildingSubTrack extends React.Component {
   render() {
     var height = this.state.bucket.range[1] - this.state.bucket.range[0];
     return (
-      <div>
+      <div className="BuildingSubTrack">
         <Rectangle
           width={2}
           height={height}

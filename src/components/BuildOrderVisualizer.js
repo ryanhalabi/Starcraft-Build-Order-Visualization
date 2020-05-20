@@ -8,7 +8,6 @@ class BuildOrderVisualizer extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.globalState;
-    console.log(this.state);
   }
 
   render() {
