@@ -1,6 +1,6 @@
 .BuildingTrack {
   padding: 0;
-  display: inline-block;
+  display: block;
   margin: 0 auto;
   /* background-color: yellow; */
 }

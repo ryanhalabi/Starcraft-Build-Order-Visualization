@@ -66,23 +66,22 @@ class BuildingTrack extends React.Component {
       <Col>
         <div className="BuildingTrack">
           {buildingName}
-          <img
-            src={`/${buildingName}.png`}
-            alt={`${buildingName}`}
-            width={80}
-          />
-
-          <Container>
-            <Row>
-              {this.state.buckets.map((value, index) => {
-                return (
-                  <Col className="BuildingSubTrackCol" key={value.range}>
-                    <BuildingSubTrack key={value.range[0]} bucket={value} />
-                  </Col>
-                );
-              })}
-            </Row>
-          </Container>
+          <div text-align="center">
+            <img
+              src={`/${buildingName}.png`}
+              alt={`${buildingName}`}
+              width={80}
+            />
+          </div>
+          <Row>
+            {this.state.buckets.map((value, index) => {
+              return (
+                <Col className="BuildingSubTrackCol" key={value.range}>
+                  <BuildingSubTrack key={value.range[0]} bucket={value} />
+                </Col>
+              );
+            })}
+          </Row>
         </div>
       </Col>
     );
