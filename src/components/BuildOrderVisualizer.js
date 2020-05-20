@@ -13,15 +13,17 @@ class BuildOrderVisualizer extends React.Component {
   render() {
     return (
       <div className="BuildOrderVisualizer">
-        <Container>
-          <Row>
-            {Object.keys(this.state.buildOrderState.buildTimes.buildings).map(
-              (value, index) => {
-                return <BuildingTrack buildingName={value} key={value} />;
-              }
-            )}
-          </Row>
-        </Container>
+        <table>
+          <tbody>
+            <tr style={{ verticalAlign: "top" }}>
+              {Object.keys(this.state.buildOrderState.buildTimes.buildings).map(
+                (value, index) => {
+                  return <BuildingTrack buildingName={value} key={value} />;
+                }
+              )}
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
