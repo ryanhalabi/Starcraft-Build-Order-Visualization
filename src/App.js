@@ -9,14 +9,6 @@ function App() {
     <div className="App">
       <header className="App-header"></header>
       <BuildOrderVisualizer />
-      <div>
-        <Slider
-          orientation="vertical"
-          defaultValue={30}
-          height={300}
-          aria-labelledby="vertical-slider"
-        />
-      </div>
     </div>
   );
 }
